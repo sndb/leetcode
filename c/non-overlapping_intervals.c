@@ -3,29 +3,18 @@
 
 int
 compar(const void *p1, const void *p2) {
-	int *i1 = *(int **)p1;
-	int *i2 = *(int **)p2;
-	if (i1[1] < i2[1])
-		return -1;
-	if (i1[1] > i2[1])
-		return 1;
-	return 0;
-}
-
-bool
-overlapHelper(int *i, int *j) {
-	if (i[0] > j[0] && i[0] < j[1])
-		return true;
-	if (i[1] > j[0] && i[1] < j[1])
-		return true;
-	return false;
+	return (*(int **)p1)[1] - (*(int **)p2)[1];
 }
 
 bool
 overlap(int *i, int *j) {
-	if (i[0] == j[0] && i[1] == j[1])
+	if (i[0] > j[0] && i[0] < j[1]
+	    || i[1] > j[0] && i[1] < j[1]
+	    || j[0] > i[0] && j[0] < i[1]
+	    || j[1] > i[0] && j[1] < i[1]
+	    || i[0] == j[0] && i[1] == j[1])
 		return true;
-	return overlapHelper(i, j) || overlapHelper(j, i);
+	return false;
 }
 
 int
